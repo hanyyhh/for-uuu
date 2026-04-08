@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For Hazell | Perpetual ✨</title>
+    <script src="https://unpkg.com/scrollreveal"></script>
+    <script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script> 
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,600;1,300;1,600&family=Plus+Jakarta+Sans:wght@200;400;800&display=swap');
+
+        :root {
+            --bg-black: #050505;
+            --brown-accent: #a67c52;
+            --soft-white: #fdfaf6;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        /* Smooth Scroll styling */
+        html.lenis, html.lenis body { height: auto; }
+        .lenis.lenis-smooth { scroll-behavior: auto !important; }
+        .lenis.lenis-smooth [data-lenis-prevent] { overscroll-behavior: contain; }
+        .lenis.lenis-stopped { overflow: hidden; }
+
+        body { 
+            background-color: var(--bg-black); 
+            color: var(--soft-white); 
+            font-family: 'Plus Jakarta Sans', sans-serif; 
+            overflow-x: hidden;
+            line-height: 1.2;
+        }
+
+        #canvas { position: fixed; top: 0; left: 0; z-index: 1; pointer-events: none; opacity: 0.3; }
+        
+        section { 
+            min-height: 100vh; 
+            display: flex; 
+            flex-direction: column; 
+            justify-content: center; 
+            align-items: center; 
+            padding: 150px 20px; 
+            position: relative;
+            z-index: 10;
+            text-align: center;
+        }
+
+        /* --- HERO --- */
+        .hero-name { 
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(5rem, 20vw, 15rem); 
+            font-style: italic;
+            font-weight: 300; 
+            background: linear-gradient(to bottom, #fff, var(--brown-accent)); 
+            -webkit-background-clip: text; 
+            -webkit-text-fill-color: transparent; 
+        }
+
+        /* --- CLOCK --- */
+        .clock-grid { display: flex; gap: clamp(10px, 4vw, 30px); justify-content: center; align-items: center; margin-top: 30px; }
+        .time-val { font-size: clamp(2.5rem, 8vw, 6rem); font-weight: 200; color: #fff; line-height: 1; }
+        #live-secs { color: var(--brown-accent); font-weight: 600; text-shadow: 0 0 25px rgba(166, 124, 82, 0.4); }
+        .time-label { font-size: 0.65rem; text-transform: uppercase; letter-spacing: 5px; color: var(--brown-accent); opacity: 0.6; margin-top: 15px; }
+
+        /* --- THE CINEMATIC POEM (MAX SIZE) --- */
+        .poem-container { max-width: 1400px; width: 100%; }
+        .poem-stanza { 
+            font-family: 'Cormorant Garamond', serif; 
+            font-size: clamp(3rem, 9vw, 8.5rem); 
+            font-style: italic; 
+            margin-bottom: 250px; /* Massive space for slow scrolling */
+            color: #fff;
+            font-weight: 300;
+            letter-spacing: -3px;
+            opacity: 0.95;
+        }
+        .poem-highlight { color: var(--brown-accent); font-weight: 600; font-style: normal; }
+
+        /* --- CONTROLS --- */
+        .music-btn { 
+            position: fixed; bottom: 30px; right: 30px;
+            background: transparent; border: 1px solid var(--brown-accent); 
+            color: var(--brown-accent); padding: 12px 25px; border-radius: 50px; 
+            cursor: pointer; z-index: 1000; font-size: 10px; letter-spacing: 3px;
+            text-transform: uppercase;
+        }
+
+        /* --- SIGNATURE --- */
+        .signature-name {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(4rem, 10vw, 8rem);
+            color: var(--brown-accent);
+            margin-top: 20px;
+            font-weight: 600;
+            letter-spacing: 8px;
+        }
+
+    </style>
+</head>
+<body>
+
+    <canvas id="canvas"></canvas>
+
+    <audio id="bgMusic" loop>
+        <source src="Ed Sheeran - Photograph (Official Lyric Video).mp3" type="audio/mpeg">
+    </audio>
+
+    <button class="music-btn" onclick="toggleMusic()" id="mBtn">Begin Voyage</button>
+
+    <section id="hero">
+        <h1 class="hero-name">Hazell</h1>
+        <p style="letter-spacing: 15px; opacity: 0.3; font-weight: 200; font-size: 0.8rem;">IN A CLASS OF YOUR OWN</p>
+    </section>
+
+    <section id="clock">
+        <p style="letter-spacing: 8px; opacity: 0.4; margin-bottom: 50px; color: var(--brown-accent); font-size: 0.9rem;">CHRONOGRAPH SINCE 10.03.2026</p>
+        <div class="clock-grid">
+            <div style="display:flex; flex-direction:column;"><span class="time-val" id="d">00</span><span class="time-label">Days</span></div>
+            <div style="display:flex; flex-direction:column;"><span class="time-val" id="h">00</span><span class="time-label">Hours</span></div>
+            <div style="display:flex; flex-direction:column;"><span class="time-val" id="m">00</span><span class="time-label">Mins</span></div>
+            <div style="display:flex; flex-direction:column;"><span class="time-val" id="live-secs">00</span><span class="time-label">Secs</span></div>
+        </div>
+    </section>
+
+    <section id="poem">
+        <div class="poem-container">
+            <div class="poem-stanza">Beyond the words,<br>beyond the rhyme...</div>
+            <div class="poem-stanza">I’d choose to know you<br><span style="color: var(--brown-accent);">every single time.</span></div>
+            <div class="poem-stanza">Some people are moments,<br>but you are <span class="poem-highlight">the atmosphere.</span></div>
+            <div class="poem-stanza">A rare perspective,<br>sharp and clear.</div>
+            <div class="poem-stanza">For you, <span class="poem-highlight">Hazell</span>,<br>are warmth and light.</div>
+            <div class="poem-stanza">The one who turns<br>the dark so bright.</div>
+            <div class="poem-stanza">You carry a rhythm<br>uniquely <span class="poem-highlight">your own.</span></div>
+            <div class="poem-stanza">The kind of beauty<br>rarely known.</div>
+            <div class="poem-stanza">Not just a presence,<br>but a whole <span class="poem-highlight">vibration.</span></div>
+            <div class="poem-stanza">My favorite kind<br>of inspiration.</div>
+        </div>
+    </section>
+
+    <section id="signature" style="min-height: 80vh;">
+        <p style="font-family: 'Cormorant Garamond', serif; font-style: italic; opacity: 0.4; font-size: 2rem;">Sincerely,</p>
+        <h2 class="signature-name">Hani</h2>
+    </section>
+
+    <script>
+        // 1. LENIS SMOOTH & SLOW SCROLL
+        const lenis = new Lenis({
+            duration: 3, // Higher number = Slower, more cinematic scroll
+            easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+            smoothWheel: true
+        });
+
+        function raf(time) {
+            lenis.raf(time);
+            requestAnimationFrame(raf);
+        }
+        requestAnimationFrame(raf);
+
+        // 2. STAR BACKGROUND
+        const canvas = document.getElementById('canvas');
+        const ctx = canvas.getContext('2d');
+        let stars = [];
+        function initStars() {
+            canvas.width = window.innerWidth; canvas.height = window.innerHeight;
+            stars = []; for(let i=0; i<90; i++) stars.push({x: Math.random()*canvas.width, y: Math.random()*canvas.height, r: Math.random()*1.5, d: Math.random()*0.3 + 0.1});
+        }
+        function drawStars() {
+            ctx.clearRect(0,0,canvas.width,canvas.height); ctx.fillStyle = "#a67c52";
+            stars.forEach(s => { ctx.beginPath(); ctx.arc(s.x, s.y, s.r, 0, Math.PI*2); ctx.fill(); s.y -= s.d; if(s.y < 0) s.y = canvas.height; });
+            requestAnimationFrame(drawStars);
+        }
+        window.addEventListener('resize', initStars); initStars(); drawStars();
+
+        // 3. TICKING CLOCK
+        function updateClock() {
+            const start = new Date("2026-03-10T00:00:00");
+            const now = new Date();
+            const diff = now - start;
+            document.getElementById('d').innerText = Math.floor(diff / 86400000).toString().padStart(2, '0');
+            document.getElementById('h').innerText = Math.floor((diff / 3600000) % 24).toString().padStart(2, '0');
+            document.getElementById('m').innerText = Math.floor((diff / 60000) % 60).toString().padStart(2, '0');
+            document.getElementById('live-secs').innerText = Math.floor((diff / 1000) % 60).toString().padStart(2, '0');
+        }
+        setInterval(updateClock, 1000); updateClock();
+
+        // 4. MUSIC TOGGLE
+        const audio = document.getElementById('bgMusic');
+        function toggleMusic() {
+            if (audio.paused) { audio.play(); document.getElementById('mBtn').innerText = "VIBE ACTIVE"; }
+            else { audio.pause(); document.getElementById('mBtn').innerText = "PAUSED"; }
+        }
+
+        // 5. SCROLL REVEAL (Fades in the large text slowly)
+        const sr = ScrollReveal({ reset: true, distance: '100px', duration: 2500 });
+        sr.reveal('.hero-name', { scale: 0.9, delay: 300 });
+        sr.reveal('.clock-grid', { origin: 'bottom', delay: 400 });
+        sr.reveal('.poem-stanza', { interval: 800, origin: 'bottom' });
+        sr.reveal('.signature-name', { delay: 600, scale: 1.1 });
+    </script>
+</body>
+</html>
