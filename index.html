@@ -18,7 +18,6 @@
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
         
-        /* Lenis Smooth Scroll Setup */
         html.lenis, html.lenis body { height: auto; }
         .lenis.lenis-smooth { scroll-behavior: auto !important; }
 
@@ -43,7 +42,6 @@
             z-index: 10;
         }
 
-        /* --- HERO --- */
         .hero-name { 
             font-family: 'Cormorant Garamond', serif;
             font-size: clamp(5rem, 20vw, 15rem); 
@@ -54,7 +52,6 @@
             -webkit-text-fill-color: transparent; 
         }
 
-        /* --- DAILY MESSAGE BOX --- */
         .daily-container {
             max-width: 900px;
             background: var(--glass);
@@ -65,14 +62,13 @@
             text-align: center;
         }
         .day-label { letter-spacing: 8px; color: var(--brown-accent); font-size: 0.8rem; margin-bottom: 40px; display: block; opacity: 0.6; }
-        #daily-text { font-family: 'Cormorant Garamond', serif; font-size: clamp(2rem, 5vw, 4rem); font-style: italic; line-height: 1.3; }
+        #daily-text { font-family: 'Cormorant Garamond', serif; font-size: clamp(1.8rem, 4vw, 3.5rem); font-style: italic; line-height: 1.3; }
 
-        /* --- POEM (MASSIVE CINEMATIC) --- */
         .poem-stanza { 
             font-family: 'Cormorant Garamond', serif; 
             font-size: clamp(3rem, 10vw, 9rem); 
             font-style: italic; 
-            margin-bottom: 350px;
+            margin-bottom: 400px;
             text-align: center;
             letter-spacing: -2px;
         }
@@ -103,7 +99,7 @@
     <section id="daily">
         <div class="daily-container">
             <span class="day-label" id="day-counter">MOMENT 1 OF 365</span>
-            <p id="daily-text">"Loading the first thought..."</p>
+            <p id="daily-text">"Syncing..."</p>
         </div>
     </section>
 
@@ -122,18 +118,15 @@
     </section>
 
     <script>
-        // 1. LENIS ULTRA-SLOW SCROLL
-        const lenis = new Lenis({ 
-            duration: 4, // Very slow and heavy
-            easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)) 
-        });
+        // 1. LENIS SMOOTH SCROLL
+        const lenis = new Lenis({ duration: 4, easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)) });
         function raf(time) { lenis.raf(time); requestAnimationFrame(raf); }
         requestAnimationFrame(raf);
 
-        // 2. 365 DAYS LOGIC - ANCHORED TO TODAY (April 8, 2026)
+        // 2. 365 DAYS ARRAY (Hani's Complete Collection)
         const thoughts = [
-            "Today is the beginning of 365 days of appreciating your rare energy.", // DAY 1
-            "Your perspective is a masterpiece that the world is lucky to have.", 
+            "Today is the beginning of 365 days of appreciating your rare energy.",
+            "Your perspective is a masterpiece that the world is lucky to have.",
             "There is a quiet power in your grace that speaks louder than noise.",
             "You carry a vibration that turns every ordinary moment into a memory.",
             "In a crowd of originals, you are the most authentic version I've seen.",
@@ -151,38 +144,72 @@
             "Your strength is hidden in your kindness, and it is immense.",
             "A rare combination of sharp logic and a warm heart.",
             "You deserve the same quality of energy that you give to the world.",
-            "Your vibration is the kind that inspires change without words."
-            // The engine below will cycle and blend these themes perfectly for 365 days.
+            "Your vibration is the kind that inspires change without words.",
+            "Character is what you have in abundance, and it shows.",
+            "You possess a clarity of mind that is truly refreshing.",
+            "Your silence carries more wisdom than most people's speech.",
+            "You are the definition of a high-value presence.",
+            "The world needs more people who see things the way you do.",
+            "Your focus is a sharp blade; it cuts through all the noise.",
+            "You are a sanctuary of calm in a very chaotic world.",
+            "Your growth is a quiet, beautiful process to witness.",
+            "You have a way of making the people around you feel seen.",
+            "Hazell, your potential has no ceiling.",
+            "Your poise is a form of art.",
+            "There is a richness to your personality that never fades.",
+            "You are the architect of your own unique path.",
+            "Your intuition is a compass that never points wrong.",
+            "The most beautiful thing about you is your authenticity.",
+            "You are a steady flame, not a flickering spark.",
+            "Your grace under pressure is your greatest asset.",
+            "You bring a sense of balance to everything you touch.",
+            "Your mind is a gallery of brilliant ideas.",
+            "You are exactly where you need to be today.",
+            "Your journey is uniquely yours, and it is extraordinary.",
+            "You possess a rare kind of inner peace.",
+            "Your contribution to the world is quiet but profound.",
+            "You are the main character of a truly great story.",
+            "Your heart is as deep as the ocean and twice as calm.",
+            "You are a master of the subtle things that matter most.",
+            "Your resilience is a testament to your spirit.",
+            "You have a natural ability to inspire those around you.",
+            "Your sense of self is your most powerful tool.",
+            "You are a light that doesn't need to be loud to shine.",
+            "Your presence is the quietest kind of luxury.",
+            "You are the harmony in a world of discord.",
+            "Your thoughts are seeds of greatness.",
+            "You carry yourself with a dignity that is rare today.",
+            "Your soul has a color that is uniquely beautiful.",
+            "You are a constant reminder of what is possible.",
+            "Your energy is a gift that keeps on giving.",
+            "You are the calm in the eye of the storm.",
+            "Your essence is pure, rare, and unforgettable.",
+            "You are a masterpiece in progress, and the view is stunning."
         ];
 
+        // This generator fills the rest of the 365 days by blending Hazell's best traits
+        function generateMessage(index) {
+            if (index < thoughts.length) return thoughts[index];
+            const traits = ["grace", "mind", "perspective", "vibe", "clarity", "strength", "heart", "spirit"];
+            const desc = ["is a rare gift.", "remains unmatched.", "is pure inspiration.", "defines excellence.", "is your superpower."];
+            const trait = traits[index % traits.length];
+            const d = desc[index % desc.length];
+            return `Hazell, your ${trait} ${d}`;
+        }
+
         function setDaily() {
-            // SET ANCHOR TO TODAY: April 8, 2026
-            const anchorDate = new Date("2026-04-08");
+            const anchorDate = new Date("2026-04-08"); // Today is Day 1
             const today = new Date();
-            
-            // Calculate days since anchor
-            const diffTime = today - anchorDate;
-            const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
-            
-            // If it's before April 8, we stay on Day 1. Otherwise, we progress.
+            const diffDays = Math.floor((today - anchorDate) / (1000 * 60 * 60 * 24));
             const currentDay = diffDays < 0 ? 0 : diffDays;
             const dayNumber = (currentDay % 365) + 1;
 
-            // Logic to handle message variety for the full year
-            const themes = ["Your presence", "Your mind", "Your energy", "Your vibe", "Your light"];
-            const actions = ["is pure inspiration.", "is a rare gift.", "is a masterpiece.", "is the highlight.", "remains unmatched."];
-            
-            let message = thoughts[currentDay % thoughts.length];
-            if (currentDay >= thoughts.length) {
-                message = themes[currentDay % themes.length] + " " + actions[(currentDay + 3) % actions.length];
-            }
-
             document.getElementById('day-counter').innerText = `MOMENT ${dayNumber} OF 365`;
-            document.getElementById('daily-text').innerText = `"${message}"`;
+            document.getElementById('daily-text').innerText = `"${generateMessage(currentDay)}"`;
         }
         setDaily();
 
-        // 3. MOVING STARS
+        // 3. STARS
         const canvas = document.getElementById('canvas');
         const ctx = canvas.getContext('2d');
         let stars = [];
@@ -197,7 +224,7 @@
         }
         initStars(); drawStars();
 
-        // 4. MUSIC & REVEAL
+        // 4. MUSIC
         const audio = document.getElementById('bgMusic');
         function toggleMusic() {
             if (audio.paused) { audio.play(); document.getElementById('mBtn').innerText = "VIBE ACTIVE"; }
@@ -205,7 +232,7 @@
         }
         const sr = ScrollReveal({ reset: true, distance: '100px', duration: 2500 });
         sr.reveal('.hero-name', { scale: 0.8 });
-        sr.reveal('.daily-container', { origin: 'bottom', delay: 200 });
+        sr.reveal('.daily-container', { origin: 'bottom' });
         sr.reveal('.poem-stanza', { interval: 600, origin: 'bottom' });
     </script>
 </body>
