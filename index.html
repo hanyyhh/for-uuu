@@ -3,21 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>For Hazell | Perpetual ✨</title>
+    <title>For Hazell | The 365 Odyssey ✨</title>
     <script src="https://unpkg.com/scrollreveal"></script>
     <script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script> 
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,600;1,300;1,600&family=Plus+Jakarta+Sans:wght@200;400;800&display=swap');
 
         :root {
-            --bg-black: #050505;
-            --brown-accent: #a67c52;
-            --soft-white: #fdfaf6;
-            --glass: rgba(166, 124, 82, 0.08);
+            --bg-black: #030303;
+            --gold-accent: #d4af37;
+            --soft-white: #fffdfa;
+            --glass: rgba(212, 175, 55, 0.05);
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        
         html.lenis, html.lenis body { height: auto; }
         .lenis.lenis-smooth { scroll-behavior: auto !important; }
 
@@ -26,10 +25,10 @@
             color: var(--soft-white); 
             font-family: 'Plus Jakarta Sans', sans-serif; 
             overflow-x: hidden;
-            line-height: 1.2;
+            line-height: 1.4;
         }
 
-        #canvas { position: fixed; top: 0; left: 0; z-index: 1; pointer-events: none; opacity: 0.3; }
+        #canvas { position: fixed; top: 0; left: 0; z-index: 1; pointer-events: none; opacity: 0.4; }
         
         section { 
             min-height: 100vh; 
@@ -43,108 +42,94 @@
             text-align: center;
         }
 
-        /* --- HERO --- */
         .hero-name { 
             font-family: 'Cormorant Garamond', serif;
-            font-size: clamp(5rem, 20vw, 15rem); 
+            font-size: clamp(5rem, 22vw, 18rem); 
             font-style: italic;
             font-weight: 300; 
-            background: linear-gradient(to bottom, #fff, var(--brown-accent)); 
+            background: linear-gradient(to bottom, #fff, var(--gold-accent)); 
             -webkit-background-clip: text; 
             -webkit-text-fill-color: transparent; 
+            filter: drop-shadow(0 0 30px rgba(212, 175, 55, 0.2));
         }
 
-        /* --- THE ORIGINAL CLOCK --- */
-        .clock-grid { display: flex; gap: clamp(10px, 4vw, 30px); justify-content: center; align-items: center; margin-top: 30px; }
-        .time-val { font-size: clamp(2.5rem, 8vw, 6rem); font-weight: 200; color: #fff; line-height: 1; }
-        #live-secs { color: var(--brown-accent); font-weight: 600; text-shadow: 0 0 25px rgba(166, 124, 82, 0.4); }
-        .time-label { font-size: 0.65rem; text-transform: uppercase; letter-spacing: 5px; color: var(--brown-accent); opacity: 0.6; margin-top: 15px; }
+        .clock-grid { display: flex; gap: clamp(10px, 4vw, 40px); justify-content: center; align-items: center; margin-top: 40px; }
+        .time-val { font-size: clamp(3rem, 10vw, 7rem); font-weight: 200; color: #fff; letter-spacing: -2px; }
+        #live-secs { color: var(--gold-accent); font-weight: 600; }
+        .time-label { font-size: 0.6rem; text-transform: uppercase; letter-spacing: 6px; color: var(--gold-accent); opacity: 0.7; margin-top: 10px; }
 
-        /* --- DAILY MESSAGE --- */
         .daily-container {
-            max-width: 900px;
+            max-width: 1000px;
             background: var(--glass);
-            border: 1px solid var(--brown-accent);
-            padding: 100px 50px;
-            border-radius: 60px;
-            backdrop-filter: blur(20px);
+            border: 0.5px solid rgba(212, 175, 55, 0.3);
+            padding: 120px 60px;
+            border-radius: 80px;
+            backdrop-filter: blur(30px);
         }
-        .day-label { letter-spacing: 8px; color: var(--brown-accent); font-size: 0.8rem; margin-bottom: 40px; display: block; opacity: 0.6; }
-        #daily-text { font-family: 'Cormorant Garamond', serif; font-size: clamp(1.8rem, 4vw, 3.5rem); font-style: italic; }
+        .day-label { letter-spacing: 12px; color: var(--gold-accent); font-size: 0.7rem; margin-bottom: 50px; display: block; font-weight: 800; }
+        #daily-text { font-family: 'Cormorant Garamond', serif; font-size: clamp(2rem, 5vw, 4rem); font-style: italic; color: #fff; }
 
-        /* --- POEM --- */
-        .poem-stanza { 
-            font-family: 'Cormorant Garamond', serif; 
-            font-size: clamp(3rem, 10vw, 9rem); 
-            font-style: italic; 
-            margin-bottom: 400px;
-            letter-spacing: -2px;
-        }
-        .highlight { color: var(--brown-accent); font-weight: 600; font-style: normal; }
+        .poem-stanza { font-family: 'Cormorant Garamond', serif; font-size: clamp(3.5rem, 11vw, 10rem); font-style: italic; margin-bottom: 500px; letter-spacing: -3px; }
+        .highlight { color: var(--gold-accent); font-weight: 600; font-style: normal; text-shadow: 0 0 20px rgba(212, 175, 55, 0.4); }
 
-        .music-btn { 
-            position: fixed; bottom: 30px; right: 30px;
-            background: transparent; border: 1px solid var(--brown-accent); 
-            color: var(--brown-accent); padding: 12px 25px; border-radius: 50px; 
-            cursor: pointer; z-index: 1000; font-size: 10px; letter-spacing: 3px;
-        }
-
-        .signature { font-family: 'Cormorant Garamond', serif; font-size: clamp(4rem, 12vw, 7rem); color: var(--brown-accent); font-weight: 600; letter-spacing: 5px; }
+        .music-btn { position: fixed; bottom: 30px; right: 30px; background: rgba(0,0,0,0.8); border: 1px solid var(--gold-accent); color: var(--gold-accent); padding: 15px 30px; border-radius: 50px; cursor: pointer; z-index: 1000; font-size: 10px; letter-spacing: 4px; }
+        .signature { font-family: 'Cormorant Garamond', serif; font-size: clamp(5rem, 15vw, 9rem); color: var(--gold-accent); font-weight: 600; letter-spacing: 8px; }
     </style>
 </head>
 <body>
 
     <canvas id="canvas"></canvas>
     <audio id="bgMusic" loop><source src="Ed Sheeran - Photograph (Official Lyric Video).mp3" type="audio/mpeg"></audio>
-    <button class="music-btn" onclick="toggleMusic()" id="mBtn">Begin Voyage</button>
+    <button class="music-btn" onclick="toggleMusic()" id="mBtn">Enter The Odyssey</button>
 
     <section>
         <h1 class="hero-name">Hazell</h1>
-        <p style="letter-spacing: 15px; opacity: 0.3; font-size: 0.8rem;">IN A CLASS OF YOUR OWN</p>
+        <p style="letter-spacing: 20px; opacity: 0.4; font-size: 0.7rem; color: var(--gold-accent);">ARCHIVE OF AN UNSTOPPABLE FORCE</p>
     </section>
 
     <section id="clock">
-        <p style="letter-spacing: 8px; opacity: 0.4; margin-bottom: 50px; color: var(--brown-accent); font-size: 0.9rem;">CHRONOGRAPH SINCE 10.03.2026</p>
+        <p style="letter-spacing: 10px; opacity: 0.6; margin-bottom: 60px; color: var(--gold-accent); font-size: 0.8rem; font-weight: 800;">TOTAL SYNCHRONIZATION</p>
         <div class="clock-grid">
-            <div style="display:flex; flex-direction:column;"><span class="time-val" id="d">00</span><span class="time-label">Days</span></div>
-            <div style="display:flex; flex-direction:column;"><span class="time-val" id="h">00</span><span class="time-label">Hours</span></div>
-            <div style="display:flex; flex-direction:column;"><span class="time-val" id="m">00</span><span class="time-label">Mins</span></div>
-            <div style="display:flex; flex-direction:column;"><span class="time-val" id="live-secs">00</span><span class="time-label">Secs</span></div>
+            <div><span class="time-val" id="d">00</span><span class="time-label">Days</span></div>
+            <div><span class="time-val" id="h">00</span><span class="time-label">Hours</span></div>
+            <div><span class="time-val" id="m">00</span><span class="time-label">Mins</span></div>
+            <div><span class="time-val" id="live-secs">00</span><span class="time-label">Secs</span></div>
         </div>
     </section>
 
     <section>
         <div class="daily-container">
             <span class="day-label" id="day-counter">MOMENT 1 OF 365</span>
-            <p id="daily-text">"Synchronizing..."</p>
+            <p id="daily-text">"Igniting the light..."</p>
         </div>
     </section>
 
     <section>
-        <div class="poem-stanza">Beyond the words,<br>beyond the rhyme...</div>
-        <div class="poem-stanza">I’d choose to know you<br><span class="highlight">every single time.</span></div>
-        <div class="poem-stanza">Some people are moments,<br>but you are <span class="highlight">the atmosphere.</span></div>
-        <div class="poem-stanza">A rare perspective,<br>sharp and clear.</div>
-        <div class="poem-stanza">For you, <span class="highlight">Hazell</span>,<br>are warmth and light.</div>
-        <div class="poem-stanza">The one who turns<br>the dark so bright.</div>
+        <div class="poem-stanza">The world is <span class="highlight">noise</span>,<br>but you are the <span class="highlight">song</span>.</div>
+        <div class="poem-stanza">Where we are going,<br>we <span class="highlight">both</span> belong.</div>
+        <div class="poem-stanza">Your mind is a <span class="highlight">kingdom</span>,<br>your heart is the key.</div>
+        <div class="poem-stanza">There is no <span class="highlight">limit</span><br>to what we can be.</div>
     </section>
 
     <section style="min-height: 80vh;">
-        <p style="font-family: 'Cormorant Garamond', serif; font-style: italic; opacity: 0.4; font-size: 2rem; margin-bottom: 20px;">Sincerely,</p>
+        <p style="font-family: 'Cormorant Garamond', serif; font-style: italic; opacity: 0.5; font-size: 2.5rem; margin-bottom: 20px; color: var(--gold-accent);">With absolute devotion,</p>
         <h2 class="signature">Hani</h2>
     </section>
 
     <script>
-        // 1. LENIS SLOW SCROLL
         const lenis = new Lenis({ duration: 4, easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)) });
         function raf(time) { lenis.raf(time); requestAnimationFrame(raf); }
         requestAnimationFrame(raf);
 
-        // 2. THE ORIGINAL CHRONOGRAPH LOGIC (March 10)
+        // --- CLOCK WITH +1 HOUR OFFSET FIX ---
         function updateClock() {
-            const start = new Date("2026-03-10T00:00:00");
+            const start = new Date("March 10, 2026 00:00:00"); 
             const now = new Date();
-            const diff = now - start;
+            
+            // Adding 1 hour (3600000ms) to fix the timezone offset bug
+            const adjustedNow = new Date(now.getTime() + 3600000); 
+            
+            const diff = Math.max(0, adjustedNow - start);
             document.getElementById('d').innerText = Math.floor(diff / 86400000).toString().padStart(2, '0');
             document.getElementById('h').innerText = Math.floor((diff / 3600000) % 24).toString().padStart(2, '0');
             document.getElementById('m').innerText = Math.floor((diff / 60000) % 60).toString().padStart(2, '0');
@@ -152,46 +137,48 @@
         }
         setInterval(updateClock, 1000); updateClock();
 
-        // 3. DAILY MESSAGE LOGIC (Starts April 8)
         const thoughts = [
-            "Today is the beginning of 365 days of appreciating your rare energy.",
-            "Your perspective is a masterpiece that the world is lucky to have.",
-            "There is a quiet power in your grace that speaks louder than noise.",
-            "You carry a vibration that turns every ordinary moment into a memory.",
-            "In a crowd of originals, you are the most authentic version I've seen.",
-            "The way you think is my favorite kind of landscape to explore.",
-            "Your ambition doesn't need to shout to be deeply felt by everyone.",
-            "True elegance is how you handle the world without losing your light.",
-            "You aren't just a presence; you are an entire atmosphere.",
-            "Hazell, your intelligence is your most magnetic feature."
+            "Today marks the start of a year-long tribute to your brilliance.",
+            "Your ambition is a fire that warms everyone lucky enough to know you.",
+            "Hazell, you don't just walk into a room—you change its entire frequency.",
+            "The depth of your mind is a landscape I could explore for a thousand years.",
+            "You are a masterclass in poise, power, and genuine heart.",
+            "Never apologize for your fire; the world is just lucky to feel your heat.",
+            "Your intelligence is magnetic, but your kindness is what makes you rare.",
+            "Everything you touch becomes a little more beautiful, a little more intentional.",
+            "Hazell, you are the highest standard of what a person can be.",
+            "Your energy doesn't just inspire me; it makes me want to build empires."
         ];
 
         function generateMessage(index) {
             if (index < thoughts.length) return thoughts[index];
-            const traits = ["grace", "mind", "vibe", "spirit", "heart"];
-            const desc = ["is a rare gift.", "remains unmatched.", "is pure inspiration."];
+            const traits = ["vision", "spirit", "vibe", "intellect", "grace", "fire"];
+            const desc = ["is unmatched.", "is a force of nature.", "is the definition of luxury.", "inspires everything I do."];
             return `Hazell, your ${traits[index % traits.length]} ${desc[index % desc.length]}`;
         }
 
+        // --- DAILY COUNTER WITH +1 HOUR OFFSET FIX ---
         function setDaily() {
-            const anchor = new Date("2026-04-08"); // Day 1 is today
-            const diffDays = Math.floor((new Date() - anchor) / 86400000);
-            const dayNum = (diffDays < 0 ? 0 : diffDays) + 1;
+            const dayOne = new Date("April 8, 2026 00:00:00"); 
+            const now = new Date();
+            const adjustedNow = new Date(now.getTime() + 3600000); 
+
+            const diffDays = Math.floor((adjustedNow - dayOne) / 86400000);
+            const dayNum = Math.max(0, diffDays) + 1;
             document.getElementById('day-counter').innerText = `MOMENT ${dayNum} OF 365`;
             document.getElementById('daily-text').innerText = `"${generateMessage(dayNum - 1)}"`;
         }
         setDaily();
 
-        // 4. STARS
         const canvas = document.getElementById('canvas');
         const ctx = canvas.getContext('2d');
         let stars = [];
         function initStars() {
             canvas.width = window.innerWidth; canvas.height = window.innerHeight;
-            stars = []; for(let i=0; i<85; i++) stars.push({x: Math.random()*canvas.width, y: Math.random()*canvas.height, r: Math.random()*1.3, d: Math.random()*0.3 + 0.1});
+            stars = []; for(let i=0; i<100; i++) stars.push({x: Math.random()*canvas.width, y: Math.random()*canvas.height, r: Math.random()*1.5, d: Math.random()*0.2 + 0.1});
         }
         function drawStars() {
-            ctx.clearRect(0,0,canvas.width,canvas.height); ctx.fillStyle = "#a67c52";
+            ctx.clearRect(0,0,canvas.width,canvas.height); ctx.fillStyle = "#d4af37";
             stars.forEach(s => { ctx.beginPath(); ctx.arc(s.x, s.y, s.r, 0, Math.PI*2); ctx.fill(); s.y -= s.d; if(s.y < 0) s.y = canvas.height; });
             requestAnimationFrame(drawStars);
         }
@@ -202,10 +189,11 @@
             if (audio.paused) { audio.play(); document.getElementById('mBtn').innerText = "VIBE ACTIVE"; }
             else { audio.pause(); document.getElementById('mBtn').innerText = "PAUSED"; }
         }
-        const sr = ScrollReveal({ reset: true, distance: '100px', duration: 2500 });
-        sr.reveal('.hero-name', { scale: 0.8 });
-        sr.reveal('.clock-grid', { delay: 400 });
-        sr.reveal('.daily-container', { origin: 'bottom' });
+
+        const sr = ScrollReveal({ reset: true, distance: '120px', duration: 2500 });
+        sr.reveal('.hero-name', { scale: 0.9, opacity: 0 });
+        sr.reveal('.clock-grid', { delay: 500 });
+        sr.reveal('.daily-container', { origin: 'bottom', scale: 0.95 });
         sr.reveal('.poem-stanza', { interval: 600, origin: 'bottom' });
     </script>
 </body>
